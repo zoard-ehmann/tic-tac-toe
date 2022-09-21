@@ -12,10 +12,25 @@ class Table:
             return "X"
         return "O"
 
+    
+    def _throw_err(self):
+        print(
+            '''
+            -----------------------------------------------
+            ****** This field has been taken already ******
+            ******     Please choose another one     ******
+            -----------------------------------------------
+            '''
+        )
+
 
     def set_table_field(self, row, col, player):
-        if row[col] == " ": row[col] = self._recognize_player(player)
-
+        if row[col] == " ":
+            row[col] = self._recognize_player(player)
+            return 0
+        else:
+            self._throw_err()
+            return 1
 
 
     def print_table(self):
