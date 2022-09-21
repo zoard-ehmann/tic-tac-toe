@@ -9,5 +9,5 @@ class Player:
         ]
 
 
-    def set_table(self, table):
+    def set_table(self, table:list):
         self.table = table
