@@ -24,24 +24,25 @@ class Table:
         )
 
 
-    def set_table_field(self, row, col, player):
-        if row[col] == " ":
-            row[col] = self._recognize_player(player)
-            return 0
+    def set_table_field(self, row, column, player):
+        col = column - 1
+        if self.table_data[row][col] == " ":
+            self.table_data[row][col] = self._recognize_player(player)
+            return 1
         else:
             self._throw_err()
-            return 1
+            return 0
 
 
     def print_table(self):
         print(
             f'''
             -------------
-            | ${self.table_data[0][0]} | ${self.table_data[0][1]} | ${self.table_data[0][2]} |
+            | {self.table_data["a"][0]} | {self.table_data["a"][1]} | {self.table_data["a"][2]} |
             -------------
-            | ${self.table_data[1][0]} | ${self.table_data[1][1]} | ${self.table_data[1][2]} |
+            | {self.table_data["b"][0]} | {self.table_data["b"][1]} | {self.table_data["b"][2]} |
             -------------
-            | ${self.table_data[2][0]} | ${self.table_data[2][1]} | ${self.table_data[2][2]} |
+            | {self.table_data["c"][0]} | {self.table_data["c"][1]} | {self.table_data["c"][2]} |
             -------------
             '''
         )
