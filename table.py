@@ -7,31 +7,23 @@ class Table:
         }
 
 
-    def _recognize_player(self, player):
+    def _recognize_player(self, player:int) -> str:
         if player == 1:
             return "X"
         return "O"
 
-    
-    def _throw_err(self):
-        print(
-            '''
-            -----------------------------------------------
-            ****** This field has been taken already ******
-            ******     Please choose another one     ******
-            -----------------------------------------------
-            '''
-        )
 
-
-    def set_table_field(self, row, column, player):
-        col = column - 1
-        if self.table_data[row][col] == " ":
-            self.table_data[row][col] = self._recognize_player(player)
-            return 1
+    def set_table_field(self, row:str, column:int, player:int) -> int:
+        if row in ['a', 'b', 'c'] and column in [1, 2, 3]:
+            col = column - 1
+            
+            if self.table_data[row][col] == " ":
+                self.table_data[row][col] = self._recognize_player(player)
+                return 1
+            print('This field has been already taken, please choose another one.')
         else:
-            self._throw_err()
-            return 0
+            print('Invalid input! Please try again.')
+        return 0
 
 
     def print_table(self):
