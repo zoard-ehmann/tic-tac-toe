@@ -39,11 +39,9 @@ def main():
 
 
     clear_console()
-    player1 = input('Please enter the name of Player 1 (X): ').capitalize()
-    player2 = input('Please enter the name of Player 2 (O): ').capitalize()
 
-    p1 = Player(player1, 1)
-    p2 = Player(player2, 2)
+    p1 = Player(player_nr=1)
+    p2 = Player(player_nr=2)
     curr_player = p1
 
     table.print_table()
@@ -52,7 +50,7 @@ def main():
         player_loop = True
         while player_loop:
             field = None
-            print(f'\n{curr_player.name}\'s turn ({curr_player})\n')
+            print(f'\n{curr_player.name}\'s turn ({curr_player.symbol})\n')
 
             while field == None:
                 field = ask_user_input()
@@ -60,7 +58,7 @@ def main():
             row = field[0]
             col = field[1]
             
-            if table.set_table_field(row=row, col=col, player=curr_player.player_nr):
+            if table.set_table_field(row=row, col=col, player=curr_player.number):
                 curr_player.set_field(row=row, col=col)
                 player_loop = False
 
