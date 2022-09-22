@@ -58,9 +58,7 @@ def main():
                 curr_player.set_field(row=row, col=col)
                 player_loop = False
 
-        print(f'DEBUG::::: {curr_player.name, curr_player.table}')
-
-        if game.check_state(player=curr_player):
+        if game.check_state(table=curr_player.table):
             print(f'{curr_player.name} have won!')
             game_is_on = False
         elif not table.field_available():
