@@ -1,5 +1,17 @@
 class Game:
+    """Main game logic to calculate the winning situation.
+    """
     def check_state(self, table:dict) -> bool:
+        """Checks the user's table for winning sitatuions.
+
+        Args:
+            table (dict): User's table (the fields the user marked).
+            Example:
+            {"a": [0, 0, 0], "b"...}
+
+        Returns:
+            bool: Returns 'True' when a winning situation occurs.
+        """
         a = table["a"]
         b = table["b"]
         c = table["c"]

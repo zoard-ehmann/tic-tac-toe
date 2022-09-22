@@ -7,15 +7,21 @@ from game import Game
 # TODO: add single-player mod
 
 def clear_console():
+    """Clears the console output.
+    """
     os.system('clear')
 
 
 def ask_field_input() -> tuple:
-    user_prompt = input('Choose a field (row and column, eg.: a1): ')
+    """Prompts the user for a field input (eg.: a1), validates it for length and splits into row and column.
+    Returns 'None' if the input is not valid.
 
+    Returns:
+        tuple: Row (alphabetical) and column (numeric) as a tuple.
+    """
+    user_prompt = input('Choose a field (row and column, eg.: a1): ')
     if len(user_prompt) == 2:
         row = user_prompt[0].lower()
-
         if row.isalpha():
             try:
                 col = int(user_prompt[1]) - 1
@@ -62,7 +68,7 @@ def main():
             print(f'{curr_player.name} have won!')
             curr_player.increment_score()
             game_is_on = False
-        elif not table.field_available():
+        elif not table.has_available_field():
             print('All the fields have been taken. It\'s a draw.')
             game_is_on = False
         else:

@@ -1,5 +1,9 @@
 class Table:
+    """Table class to set up a new board.
+    """
     def __init__(self) -> None:
+        """Initializes a table for rendering.
+        """
         self.table_data = {
             "a": [" ", " ", " "],
             "b": [" ", " ", " "],
@@ -7,6 +11,17 @@ class Table:
         }
 
     def set_table_field(self, row:str, col:int, symbol:str) -> bool:
+        """Validates the user input against the available fields.
+        Sets a field of the table with the proper symbol based on the actual player.
+
+        Args:
+            row (str): User-selected row.
+            col (int): User-seleceted column.
+            symbol (str): Symbol of the user.
+
+        Returns:
+            bool: 'True' if setting the field was success and 'False' otherwise.
+        """
         if row in ['a', 'b', 'c'] and col in [0, 1, 2]:
             if self.table_data[row][col] == " ":
                 self.table_data[row][col] = symbol
@@ -16,13 +31,20 @@ class Table:
             print('Invalid input! Please try again.')
         return False
 
-    def field_available(self) -> bool:
+    def has_available_field(self) -> bool:
+        """Checks if there are any available fields on the board.
+
+        Returns:
+            bool: 'True' if there's at least 1 available field, 'False' otherwise.
+        """
         for _, fields in self.table_data.items():
             if " " in fields:
                 return True
         return False
 
     def print_table(self):
+        """Prints the actual board.
+        """
         print(
             f'''
                 1   2   3
@@ -37,6 +59,8 @@ class Table:
         )
 
     def clear_table(self):
+        """Clears the game board and sets an empty space for each field.
+        """
         for row, fields in self.table_data.items():
             for field in range(len(fields)):
                 self.table_data[row][field] = " "
