@@ -21,6 +21,12 @@ class Table:
             print('Invalid input! Please try again.')
         return 0
 
+    def field_available(self) -> bool:
+        for _, row in self.table_data.items():
+            if " " in row:
+                return True
+        return False
+
     def print_table(self):
         print(
             f'''
