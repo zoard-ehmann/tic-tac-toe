@@ -54,7 +54,7 @@ def main():
 
             row = field[0]
             col = field[1]
-            if table.set_table_field(row=row, col=col, player=curr_player.number):
+            if table.set_table_field(row=row, col=col, symbol=curr_player.symbol):
                 curr_player.set_field(row=row, col=col)
                 player_loop = False
 

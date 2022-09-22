@@ -6,15 +6,10 @@ class Table:
             "c": [" ", " ", " "],
         }
 
-    def _recognize_player(self, player:int) -> str:
-        if player == 1:
-            return "X"
-        return "O"
-
-    def set_table_field(self, row:str, col:int, player:int) -> int:
+    def set_table_field(self, row:str, col:int, symbol:str) -> int:
         if row in ['a', 'b', 'c'] and col in [0, 1, 2]:
             if self.table_data[row][col] == " ":
-                self.table_data[row][col] = self._recognize_player(player)
+                self.table_data[row][col] = symbol
                 return 1
             print('This field has been already taken, please choose another one.')
         else:
