@@ -3,6 +3,7 @@ class Player:
         self.number = player_nr
         self.symbol = self._set_symbol()
         self.name = self._set_name()
+        self.score = 0
         self.table = {
             "a": [0, 0, 0],
             "b": [0, 0, 0],
@@ -28,3 +29,11 @@ class Player:
 
     def set_field(self, row:str, col:int):
         self.table[row][col] = 1
+
+    def increment_score(self):
+        self.score += 1
+
+    def clear_table(self):
+        for row, fields in self.table.items():
+            for field in range(len(fields)):
+                self.table[row][field] = 0

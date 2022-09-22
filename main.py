@@ -60,6 +60,7 @@ def main():
 
         if game.check_state(table=curr_player.table):
             print(f'{curr_player.name} have won!')
+            curr_player.increment_score()
             game_is_on = False
         elif not table.field_available():
             print('All the fields have been taken. It\'s a draw.')
@@ -71,5 +72,16 @@ def main():
                 curr_player = p1
 
         table.print_table()
+
+        if not game_is_on:
+            if input('Would you like to play again? (enter \'y\' if yes): ').lower() == 'y':
+                game_is_on = True
+                curr_player = p1
+                clear_console()
+                table.clear_table()
+                p1.clear_table()
+                p2.clear_table()
+            print(f'{p1.name}\'s score: {p1.score}')
+            print(f'{p2.name}\'s score: {p2.score}')
 
 main()

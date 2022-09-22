@@ -6,19 +6,19 @@ class Table:
             "c": [" ", " ", " "],
         }
 
-    def set_table_field(self, row:str, col:int, symbol:str) -> int:
+    def set_table_field(self, row:str, col:int, symbol:str) -> bool:
         if row in ['a', 'b', 'c'] and col in [0, 1, 2]:
             if self.table_data[row][col] == " ":
                 self.table_data[row][col] = symbol
-                return 1
+                return True
             print('This field has been already taken, please choose another one.')
         else:
             print('Invalid input! Please try again.')
-        return 0
+        return False
 
     def field_available(self) -> bool:
-        for _, row in self.table_data.items():
-            if " " in row:
+        for _, fields in self.table_data.items():
+            if " " in fields:
                 return True
         return False
 
@@ -35,3 +35,8 @@ class Table:
               -------------
             '''
         )
+
+    def clear_table(self):
+        for row, fields in self.table_data.items():
+            for field in range(len(fields)):
+                self.table_data[row][field] = " "
