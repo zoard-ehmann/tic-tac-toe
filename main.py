@@ -35,14 +35,19 @@ def main():
 
     p1 = Player(player_nr=1)
     p2 = Player(player_nr=2)
+
+    while p1.name == p2.name:
+        print('This name has been taken. Please choose another one.')
+        p2 = Player(player_nr=2)
+
     curr_player = p1
 
     table.print_table()
     game_is_on = True
     while game_is_on:
+        print(f'\n{curr_player.name}\'s turn ({curr_player.symbol})\n')
         player_loop = True
         while player_loop:
-            print(f'\n{curr_player.name}\'s turn ({curr_player.symbol})\n')
             field = None
             while field == None:
                 field = ask_field_input()
@@ -52,6 +57,8 @@ def main():
             if table.set_table_field(row=row, col=col, player=curr_player.number):
                 curr_player.set_field(row=row, col=col)
                 player_loop = False
+
+        print(f'DEBUG::::: {curr_player.name, curr_player.table}')
 
         if game.check_state(player=curr_player):
             print(f'{curr_player.name} have won!')
