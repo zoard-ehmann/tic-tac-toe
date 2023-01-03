@@ -2,7 +2,7 @@ class Game:
     """Main game logic to calculate the winning situation.
     """
     def check_state(self, table:dict) -> bool:
-        """Checks the user's table for winning sitatuions.
+        """Checks the user's table for winning situations.
 
         Args:
             table (dict): User's table (the fields the user marked).
