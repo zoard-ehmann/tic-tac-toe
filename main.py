@@ -33,7 +33,7 @@ def ask_field_input() -> tuple:
     return
 
 
-def main():
+if __name__ == '__main__':
     table = Table()
     game = Game()
 
@@ -89,5 +89,3 @@ def main():
                 p2.clear_table()
             print(f'{p1.name}\'s score: {p1.score}')
             print(f'{p2.name}\'s score: {p2.score}')
-
-main()
