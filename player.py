@@ -5,7 +5,7 @@ class Player:
         """Initialization function for new players, sets the symbol, table, score and prompts for a name.
 
         Args:
-            player_nr (int): Number of the player. Possible values: 1 or 2.
+            player_nr (int): Number of the player. Possible values: 0 (for computer), 1 or 2.
         """
         self.number = player_nr
         self.symbol = self._set_symbol()
@@ -21,7 +21,7 @@ class Player:
         """Sets the symbol based on the player number.
 
         Returns:
-            str: 'X' for player 1 and 'O' for player 2.
+            str: 'X' for player 1 and 'O' for player 2 / computer.
         """
         if self.number == 1:
             return 'X'
@@ -35,7 +35,9 @@ class Player:
         """
         name = None
         while not name:
-            name = self._sanitize_name(input(f'Please enter the name of Player {self.number} ({self.symbol}): '))
+            name = 'Computer'
+            if not self.number == 0:
+                name = self._sanitize_name(input(f'Please enter the name of Player {self.number} ({self.symbol}): '))
         return name
         
     def _sanitize_name(self, name:str) -> str:

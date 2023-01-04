@@ -1,4 +1,5 @@
 import os
+import time
 
 from table import Table
 from player import Player
@@ -39,8 +40,15 @@ if __name__ == '__main__':
 
     clear_console()
 
+    single_player = False
+    if input('Single player mode? (enter \'y\' if yes): ').lower() == 'y':
+        single_player = True
+
     p1 = Player(player_nr=1)
-    p2 = Player(player_nr=2)
+    if single_player:
+        p2 = Player(player_nr=0)
+    else:
+        p2 = Player(player_nr=2)
 
     while p1.name == p2.name:
         print('This name has been taken. Please choose another one.')
@@ -52,17 +60,23 @@ if __name__ == '__main__':
     game_is_on = True
     while game_is_on:
         print(f'\n{curr_player.name}\'s turn ({curr_player.symbol})\n')
-        player_loop = True
-        while player_loop:
-            field = None
-            while field == None:
-                field = ask_field_input()
+        if curr_player.name != 'Computer':
+            player_loop = True
+            while player_loop:
+                field = None
+                while field == None:
+                    field = ask_field_input()
 
-            row = field[0]
-            col = field[1]
-            if table.set_table_field(row=row, col=col, symbol=curr_player.symbol):
-                curr_player.set_field(row=row, col=col)
-                player_loop = False
+                row = field[0]
+                col = field[1]
+                if table.set_table_field(row=row, col=col, symbol=curr_player.symbol):
+                    curr_player.set_field(row=row, col=col)
+                    player_loop = False
+        else:
+            for dot in range(5):
+                time.sleep(.5)
+                print('.', end='', flush=True)
+                dot += 1
 
         if game.check_state(table=curr_player.table):
             print(f'{curr_player.name} have won!')
