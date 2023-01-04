@@ -60,13 +60,12 @@ if __name__ == '__main__':
     game_is_on = True
     while game_is_on:
         print(f'\n{curr_player.name}\'s turn ({curr_player.symbol})\n')
-        if curr_player.name != 'Computer':
+        if curr_player.number != 0:
             player_loop = True
             while player_loop:
                 field = None
                 while field == None:
                     field = ask_field_input()
-
                 row = field[0]
                 col = field[1]
                 if table.set_table_field(row=row, col=col, symbol=curr_player.symbol):
