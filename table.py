@@ -16,7 +16,7 @@ class Table:
 
         Args:
             row (str): User-selected row.
-            col (int): User-seleceted column.
+            col (int): User-selected column.
             symbol (str): Symbol of the user.
 
         Returns:
