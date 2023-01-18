@@ -7,14 +7,14 @@ class Game:
         Args:
             table (dict): User's table (the fields the user marked).
             Example:
-            {"a": [0, 0, 0], "b"...}
+            {'a': [0, 0, 0], 'b'...}
 
         Returns:
             bool: Returns 'True' when a winning situation occurs.
         """
-        a = table["a"]
-        b = table["b"]
-        c = table["c"]
+        a = table['a']
+        b = table['b']
+        c = table['c']
         win = False
 
         if 0 not in a or 0 not in b or 0 not in c:
