@@ -12,9 +12,9 @@ class Player:
         self.name = self._set_name()
         self.score = 0
         self.table = {
-            "a": [0, 0, 0],
-            "b": [0, 0, 0],
-            "c": [0, 0, 0],
+            'a': [0, 0, 0],
+            'b': [0, 0, 0],
+            'c': [0, 0, 0],
         }
 
     def _set_symbol(self) -> str:
