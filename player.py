@@ -74,3 +74,21 @@ class Player:
         for row, fields in self.table.items():
             for field in range(len(fields)):
                 self.table[row][field] = 0
+
+    def get_best_fields(self):
+        # TODO: Check for diagonals, calculate with least as possible steps
+        best_fields = []
+        for row, fields in self.table.items():
+            # Aim for complete rows
+            if 1 in fields:
+                index = 0
+                for field in fields:
+                    if field == 0:
+                        best_fields.append((row, index))
+                    # Aim for complete columns
+                    else:
+                        for row_letter in self.table:
+                            if row_letter != row:
+                                best_fields.append((row_letter, index))
+                    index += 1
+        return best_fields

@@ -20,6 +20,11 @@ def generate_field() -> tuple:
         tuple: Row (alphabetical) and column (numeric) as a tuple.
     """
     free_fields = table.check_free_fields()
+    # TODO: Implement computer 'logic'
+    best_fields = curr_player.get_best_fields()
+    print(best_fields)
+    input()
+    #################################
     return random.choice(free_fields)
 
 
