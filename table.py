@@ -10,7 +10,7 @@ class Table:
             "c": [" ", " ", " "],
         }
 
-    def set_table_field(self, row:str, col:int, symbol:str) -> bool:
+    def set_table_field(self, row:str, col:int, symbol:str, silent:bool=False) -> bool:
         """Validates the user input against the available fields.
         Sets a field of the table with the proper symbol based on the actual player.
 
@@ -26,7 +26,7 @@ class Table:
             if self.table_data[row][col] == " ":
                 self.table_data[row][col] = symbol
                 return True
-            print('This field has been already taken, please choose another one.')
+            if not silent: print('This field has been already taken, please choose another one.')
         else:
             print('Invalid input! Please try again.')
         return False
