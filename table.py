@@ -17,11 +17,11 @@ class Table:
             list: List of tuples (row, col).
         """
         free_fields = []
-        for row_name, row_data in self.table_data.items():
+        for row, fields in self.table_data.items():
             index = 0
-            for field in row_data:
+            for field in fields:
                 if field == ' ':
-                    free_fields.append((row_name, index))
+                    free_fields.append((row, index))
                 index += 1
         return free_fields
     
