@@ -5,12 +5,27 @@ class Table:
         """Initializes a table for rendering.
         """
         self.table_data = {
-            "a": [" ", " ", " "],
-            "b": [" ", " ", " "],
-            "c": [" ", " ", " "],
+            'a': [' ', ' ', ' '],
+            'b': [' ', ' ', ' '],
+            'c': [' ', ' ', ' '],
         }
+    
+    def check_free_fields(self) -> list:
+        """Checks for free fields in the game table and returns them as a list of tuples.
 
-    def set_table_field(self, row:str, col:int, symbol:str, silent:bool=False) -> bool:
+        Returns:
+            list: List of tuples (row, col).
+        """
+        free_fields = []
+        for row_name, row_data in self.table_data.items():
+            index = 0
+            for field in row_data:
+                if field == ' ':
+                    free_fields.append((row_name, index))
+                index += 1
+        return free_fields
+    
+    def set_table_field(self, row:str, col:int, symbol:str) -> bool:
         """Validates the user input against the available fields.
         Sets a field of the table with the proper symbol based on the actual player.
 
@@ -26,7 +41,7 @@ class Table:
             if self.table_data[row][col] == " ":
                 self.table_data[row][col] = symbol
                 return True
-            if not silent: print('This field has been already taken, please choose another one.')
+            print('This field has been already taken, please choose another one.')
         else:
             print('Invalid input! Please try again.')
         return False

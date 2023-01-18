@@ -14,32 +14,26 @@ def clear_console() -> None:
 
 
 def generate_field() -> tuple:
-    """Generates a random field for the computer.
+    """Chooses a random field from the free fields for the computer.
 
     Returns:
         tuple: Row (alphabetical) and column (numeric) as a tuple.
     """
-    # TODO: Choose from actual free cells (table class -> silence will not be needed)
-    return (random.choice(['a', 'b', 'c']), random.randint(0, 2))
+    free_fields = table.check_free_fields()
+    return random.choice(free_fields)
 
 
-def mark_field(row:str, col:int, player_nr:int) -> bool:
-    """Marks the field both in player table and game table. Silents the output when dealing
-    with computer chosen fields. Returns 'True' if the marking is valid.
+def mark_field(row:str, col:int) -> bool:
+    """Marks the field both in player table and game table. Returns 'True' if the marking is valid.
 
     Args:
         row (str): Row to select.
         col (int): Column to select.
-        player_nr (int): Player number. The logic discovers the player based on this. Player
-        number 0 relates to the computer. Output will be silenced in case of computer input.
 
     Returns:
         bool: Returns 'True' if the marking of the desired field is successful.
     """
-    if player_nr != 0:
-        valid_mark = table.set_table_field(row=row, col=col, symbol=curr_player.symbol)
-    else:
-        valid_mark = table.set_table_field(row=row, col=col, symbol=curr_player.symbol, silent=True)
+    valid_mark = table.set_table_field(row=row, col=col, symbol=curr_player.symbol)
     if valid_mark:
         curr_player.set_field(row=row, col=col)
         return True
@@ -99,18 +93,18 @@ if __name__ == '__main__':
                 field = None
                 while field == None:
                     field = ask_field_input()
-                if mark_field(row=field[0], col=field[1], player_nr=curr_player.number):
+                if mark_field(row=field[0], col=field[1]):
                     player_loop = False
         else:
             computer_loop = True
             while computer_loop:
                 field = generate_field()
-                if mark_field(row=field[0], col=field[1], player_nr=curr_player.number):
-                    for dot in range(3):
-                        time.sleep(.5)
-                        print('.', end='', flush=True)
-                        dot += 1
-                    computer_loop = False
+                mark_field(row=field[0], col=field[1])
+                for dot in range(3):
+                    time.sleep(.5)
+                    print('.', end='', flush=True)
+                    dot += 1
+                computer_loop = False
             print('')
 
         if game.check_state(table=curr_player.table):
