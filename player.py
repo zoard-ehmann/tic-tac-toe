@@ -90,7 +90,7 @@ class Player:
                             # Go for complete columns
                             if row_id != row:
                                 best_fields.append((row_id, index))
-                            # Aim for diagonals
+                            # Go for diagonals
                             else:
                                 print(row, index)
                                 rows = list(self.table)
