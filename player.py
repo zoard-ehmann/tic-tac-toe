@@ -76,19 +76,35 @@ class Player:
                 self.table[row][field] = 0
 
     def get_best_fields(self):
-        # TODO: Check for diagonals, calculate with least as possible steps
+        # TODO: Calculate with least as possible steps, calculate with free fields, calculate with opponent fields
         best_fields = []
         for row, fields in self.table.items():
-            # Aim for complete rows
+            # Go for complete rows
             if 1 in fields:
                 index = 0
                 for field in fields:
                     if field == 0:
                         best_fields.append((row, index))
-                    # Aim for complete columns
                     else:
                         for row_id in self.table:
+                            # Go for complete columns
                             if row_id != row:
                                 best_fields.append((row_id, index))
+                            # Aim for diagonals
+                            else:
+                                print(row, index)
+                                rows = list(self.table)
+                                pos = rows.index(row)
+                                print(f'pos: {pos}')
+                                print(f'row: {rows[pos-1]}')
+                                if not((pos - 1 < 0) or (index - 1 < 0)) and (self.table[rows[pos - 1]][index - 1]) == 0:
+                                    best_fields.append((rows[pos - 1], index - 1))
+                                if not((pos - 1 < 0) or (index + 1 > 2)) and (self.table[rows[pos - 1]][index + 1]) == 0:
+                                    best_fields.append((rows[pos - 1], index + 1))
+                                if not((pos + 1 > 2) or (index - 1 < 0)) and (self.table[rows[pos + 1]][index - 1]) == 0:
+                                    best_fields.append((rows[pos + 1], index - 1))
+                                if not((pos + 1 > 2) or (index + 1 > 2)) and (self.table[rows[pos + 1]][index + 1]) == 0:
+                                    best_fields.append((rows[pos + 1], index + 1))
                     index += 1
+        best_fields = list(dict.fromkeys(best_fields))
         return best_fields
