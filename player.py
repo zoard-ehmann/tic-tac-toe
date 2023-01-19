@@ -87,8 +87,8 @@ class Player:
                         best_fields.append((row, index))
                     # Aim for complete columns
                     else:
-                        for row_letter in self.table:
-                            if row_letter != row:
-                                best_fields.append((row_letter, index))
+                        for row_id in self.table:
+                            if row_id != row:
+                                best_fields.append((row_id, index))
                     index += 1
         return best_fields
