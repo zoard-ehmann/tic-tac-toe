@@ -75,8 +75,8 @@ class Player:
             for field in range(len(fields)):
                 self.table[row][field] = 0
 
-    def get_best_fields(self):
-        # TODO: Calculate with least as possible steps, calculate with free fields, calculate with opponent fields
+    def get_best_fields(self, free_fields=list) -> list:
+        # TODO: Calculate with least as possible steps, calculate with opponent fields
         best_fields = []
         for row, fields in self.table.items():
             # Go for complete rows
@@ -92,11 +92,8 @@ class Player:
                                 best_fields.append((row_id, index))
                             # Go for diagonals
                             else:
-                                print(row, index)
                                 rows = list(self.table)
                                 pos = rows.index(row)
-                                print(f'pos: {pos}')
-                                print(f'row: {rows[pos-1]}')
                                 if not((pos - 1 < 0) or (index - 1 < 0)) and (self.table[rows[pos - 1]][index - 1]) == 0:
                                     best_fields.append((rows[pos - 1], index - 1))
                                 if not((pos - 1 < 0) or (index + 1 > 2)) and (self.table[rows[pos - 1]][index + 1]) == 0:
@@ -107,4 +104,10 @@ class Player:
                                     best_fields.append((rows[pos + 1], index + 1))
                     index += 1
         best_fields = list(dict.fromkeys(best_fields))
-        return best_fields
+        field_pool = []
+        for field in free_fields:
+            if field in best_fields:
+                field_pool.append(field)
+        if not field_pool:
+            return free_fields
+        return field_pool

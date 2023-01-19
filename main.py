@@ -21,11 +21,11 @@ def generate_field() -> tuple:
     """
     free_fields = table.check_free_fields()
     # TODO: Implement computer 'logic'
-    best_fields = curr_player.get_best_fields()
+    best_fields = curr_player.get_best_fields(free_fields=free_fields)
     print(best_fields)
     input()
     #################################
-    return random.choice(free_fields)
+    return random.choice(best_fields)
 
 
 def mark_field(row:str, col:int) -> bool:
