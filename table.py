@@ -10,22 +10,7 @@ class Table:
             'c': [' ', ' ', ' '],
         }
     
-    def check_free_fields(self) -> list:
-        """Checks for free fields in the game table and returns them as a list of tuples.
-
-        Returns:
-            list: List of tuples (row, col).
-        """
-        free_fields = []
-        for row, fields in self.table_data.items():
-            index = 0
-            for field in fields:
-                if field == ' ':
-                    free_fields.append((row, index))
-                index += 1
-        return free_fields
-    
-    def set_table_field(self, row:str, col:int, symbol:str) -> bool:
+    def set_table_field(self, row:str, col:int, symbol:str) -> None:
         """Sets a field of the table with the proper symbol based on the actual player.
 
         Args:
@@ -35,7 +20,7 @@ class Table:
         """
         self.table_data[row][col] = symbol
 
-    def print_table(self):
+    def print_table(self) -> None:
         """Prints the actual board.
         """
         print(
@@ -51,7 +36,7 @@ class Table:
             '''
         )
 
-    def clear_table(self):
+    def clear_table(self) -> None:
         """Clears the game board and sets an empty space for each field.
         """
         for row, fields in self.table_data.items():

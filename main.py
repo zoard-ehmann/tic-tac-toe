@@ -18,9 +18,9 @@ def generate_field() -> tuple:
     Returns:
         tuple: Row (alphabetical) and column (numeric) as a tuple.
     """
-    free_fields = table.check_free_fields()
     # TODO: Implement computer 'logic'
-    best_fields = curr_player.get_best_fields(free_fields=free_fields) # Returns the free fields for now; WIP
+    best_fields = curr_player.get_best_fields() # Returns the free fields for now; WIP
+    print(best_fields)
     return random.choice(best_fields)
 
 
@@ -97,7 +97,7 @@ if __name__ == '__main__':
                     field = ask_field_input()
                 if mark_field(row=field[0], col=field[1]):
                     player_loop = False
-        else:
+        else: # FIXME: should find a smarter solution to check for comp. loop and field generating
             computer_loop = True
             while computer_loop:
                 field = generate_field()

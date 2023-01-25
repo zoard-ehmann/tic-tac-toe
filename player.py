@@ -93,29 +93,6 @@ class Player:
             for field in range(len(fields)):
                 self.table[row][field] = 0
 
-    def get_best_fields(self, free_fields=list) -> list:
-        # Returns the free fields now; WIP
-        # TODO: Calculate with least as possible steps, calculate with opponent fields, go for possible wins
-        # TODO: is free fields required at all?! (calc w/ -1s instead, should mark opponent's...)
-        # TODO: best_fields = []
-        # TODO: # Go through all rows
-        # TODO: row_weights = {} # Highest should be selected
-        # TODO: for row, fields in self.table.items():
-        # TODO:     row_sum = 0
-        # TODO:     for field in fields:
-        # TODO:         row_sum += field
-        # TODO:     row_weights[row] = [row_sum]
-        # TODO: # Go through all columns
-        # TODO: col_weights = {} # Highest should be selected
-        # TODO: for row, fields in self.table.items():
-        # TODO:     for i in range(3):
-        # TODO:         col_weights[i] += fields[i] # FIXME ADDING
-
-        # TODO: print(row_weights)
-        # TODO: print(col_weights)
-
-        return free_fields
-
     def check_win(self) -> bool:
         """Checks the user's table for winning situations.
 
@@ -153,4 +130,35 @@ class Player:
             if 0 in fields:
                 return True
         return
+
+    def get_best_fields(self) -> list:
+        # Returns the free fields now; WIP
+        free_fields = []
+        for row, fields in self.table.items():
+            index = 0
+            for field in fields:
+                if field == 0:
+                    free_fields.append((row, index))
+                index += 1
+            
+        # TODO: Calculate with least as possible steps, calculate with opponent fields, go for possible wins
+        # TODO: is free fields required at all?! (calc w/ -1s instead, should mark opponent's...)
+        # TODO: best_fields = []
+        # TODO: # Go through all rows
+        # TODO: row_weights = {} # Highest should be selected
+        # TODO: for row, fields in self.table.items():
+        # TODO:     row_sum = 0
+        # TODO:     for field in fields:
+        # TODO:         row_sum += field
+        # TODO:     row_weights[row] = [row_sum]
+        # TODO: # Go through all columns
+        # TODO: col_weights = {} # Highest should be selected
+        # TODO: for row, fields in self.table.items():
+        # TODO:     for i in range(3):
+        # TODO:         col_weights[i] += fields[i] # FIXME ADDING
+
+        # TODO: print(row_weights)
+        # TODO: print(col_weights)
+
+        return free_fields
 
