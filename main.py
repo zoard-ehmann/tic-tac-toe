@@ -34,10 +34,10 @@ def mark_field(row:str, col:int) -> bool:
     Returns:
         bool: Returns 'True' if the marking of the desired field is successful.
     """
-    valid_mark = table.set_table_field(row=row, col=col, symbol=curr_player.symbol)
-    if valid_mark:
-        curr_player.set_field(row=row, col=col, val=1)
+    # TODO: check available fields on player level
+    if curr_player.set_field(row=row, col=col, val=1):
         second_player.set_field(row=row, col=col, val=-1)
+        table.set_table_field(row=row, col=col, symbol=curr_player.symbol)
         return True
     return
 

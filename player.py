@@ -1,3 +1,6 @@
+VALID_ROWS = ['a', 'b', 'c']
+VALID_COLUMNS = [0, 1, 2]
+
 class Player:
     """Main player class to set up a new player.
     """
@@ -54,15 +57,29 @@ class Player:
         print('Name cannot be empty. Please try again.')
         return
 
-    def set_field(self, row:str, col:int, val:int) -> None:
-        """Sets a field for the user's table at a given location.
+    def set_field(self, row:str, col:int, val:int) -> bool:
+        """Validates the input against the available fields. Sets the corresponding field for the user's
+        table at a given location.
 
         Args:
             row (str): User-selected row.
             col (int): User-selected column.
-            val (int): Value of the field. 1 if user's, -1 if taken.
+            val (int): Value of the field. 1 if current player's, -1 if opponent's.
+
+        Returns:
+            bool: 'True' if setting the field was success and 'False' otherwise.
         """
-        self.table[row][col] = val
+        user_turn = True
+        if val == -1: user_turn = False
+        if row in VALID_ROWS and col in VALID_COLUMNS:
+            if self.table[row][col] == 0:
+                self.table[row][col] = val
+                return True
+            elif user_turn:
+                print('This field has been already taken, please choose another one.')
+        elif user_turn:
+            print('Invalid input! Please try again.')
+        return
 
     def increment_score(self) -> None:
         """Increments the user score by 1.

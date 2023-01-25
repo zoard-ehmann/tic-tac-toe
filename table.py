@@ -26,25 +26,14 @@ class Table:
         return free_fields
     
     def set_table_field(self, row:str, col:int, symbol:str) -> bool:
-        """Validates the user input against the available fields.
-        Sets a field of the table with the proper symbol based on the actual player.
+        """Sets a field of the table with the proper symbol based on the actual player.
 
         Args:
             row (str): User-selected row.
             col (int): User-selected column.
             symbol (str): Symbol of the user.
-
-        Returns:
-            bool: 'True' if setting the field was success and 'False' otherwise.
         """
-        if row in ['a', 'b', 'c'] and col in [0, 1, 2]:
-            if self.table_data[row][col] == " ":
-                self.table_data[row][col] = symbol
-                return True
-            print('This field has been already taken, please choose another one.')
-        else:
-            print('Invalid input! Please try again.')
-        return False
+        self.table_data[row][col] = symbol
 
     def has_available_field(self) -> bool:
         """Checks if there are any available fields on the board.
@@ -55,7 +44,7 @@ class Table:
         for _, fields in self.table_data.items():
             if " " in fields:
                 return True
-        return False
+        return
 
     def print_table(self):
         """Prints the actual board.
