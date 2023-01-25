@@ -4,7 +4,6 @@ import random
 
 from table import Table
 from player import Player
-from game import Game
 
 
 def clear_console() -> None:
@@ -21,10 +20,7 @@ def generate_field() -> tuple:
     """
     free_fields = table.check_free_fields()
     # TODO: Implement computer 'logic'
-    best_fields = curr_player.get_best_fields(free_fields=free_fields)
-    print(best_fields)
-    input()
-    #################################
+    best_fields = curr_player.get_best_fields(free_fields=free_fields) # Returns the free fields for now; WIP
     return random.choice(best_fields)
 
 
@@ -40,7 +36,8 @@ def mark_field(row:str, col:int) -> bool:
     """
     valid_mark = table.set_table_field(row=row, col=col, symbol=curr_player.symbol)
     if valid_mark:
-        curr_player.set_field(row=row, col=col)
+        curr_player.set_field(row=row, col=col, val=1)
+        second_player.set_field(row=row, col=col, val=-1)
         return True
     return
 
@@ -68,7 +65,6 @@ def ask_field_input() -> tuple:
 
 if __name__ == '__main__':
     table = Table()
-    game = Game()
 
     clear_console()
 
@@ -87,6 +83,7 @@ if __name__ == '__main__':
         p2 = Player(player_nr=2)
 
     curr_player = p1
+    second_player = p2
 
     table.print_table()
     game_is_on = True
@@ -112,7 +109,7 @@ if __name__ == '__main__':
                 computer_loop = False
             print('')
 
-        if game.check_state(table=curr_player.table):
+        if curr_player.check_state():
             print(f'{curr_player.name} have won!')
             curr_player.increment_score()
             game_is_on = False
@@ -122,8 +119,10 @@ if __name__ == '__main__':
         else:
             if curr_player.number == 1:
                 curr_player = p2
+                second_player = p1
             else:
                 curr_player = p1
+                second_player = p2
 
         table.print_table()
 

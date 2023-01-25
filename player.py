@@ -54,21 +54,22 @@ class Player:
         print('Name cannot be empty. Please try again.')
         return
 
-    def set_field(self, row:str, col:int):
+    def set_field(self, row:str, col:int, val:int) -> None:
         """Sets a field for the user's table at a given location.
 
         Args:
             row (str): User-selected row.
             col (int): User-selected column.
+            val (int): Value of the field. 1 if user's, -1 if taken.
         """
-        self.table[row][col] = 1
+        self.table[row][col] = val
 
-    def increment_score(self):
+    def increment_score(self) -> None:
         """Increments the user score by 1.
         """
         self.score += 1
 
-    def clear_table(self):
+    def clear_table(self) -> None:
         """Clears the user's table and sets 0 for each field.
         """
         for row, fields in self.table.items():
@@ -76,38 +77,52 @@ class Player:
                 self.table[row][field] = 0
 
     def get_best_fields(self, free_fields=list) -> list:
-        # TODO: Calculate with least as possible steps, calculate with opponent fields
-        best_fields = []
-        for row, fields in self.table.items():
-            # Go for complete rows
-            if 1 in fields:
-                index = 0
-                for field in fields:
-                    if field == 0:
-                        best_fields.append((row, index))
-                    else:
-                        for row_id in self.table:
-                            # Go for complete columns
-                            if row_id != row:
-                                best_fields.append((row_id, index))
-                            # Go for diagonals
-                            else:
-                                rows = list(self.table)
-                                pos = rows.index(row)
-                                if not((pos - 1 < 0) or (index - 1 < 0)) and (self.table[rows[pos - 1]][index - 1]) == 0:
-                                    best_fields.append((rows[pos - 1], index - 1))
-                                if not((pos - 1 < 0) or (index + 1 > 2)) and (self.table[rows[pos - 1]][index + 1]) == 0:
-                                    best_fields.append((rows[pos - 1], index + 1))
-                                if not((pos + 1 > 2) or (index - 1 < 0)) and (self.table[rows[pos + 1]][index - 1]) == 0:
-                                    best_fields.append((rows[pos + 1], index - 1))
-                                if not((pos + 1 > 2) or (index + 1 > 2)) and (self.table[rows[pos + 1]][index + 1]) == 0:
-                                    best_fields.append((rows[pos + 1], index + 1))
-                    index += 1
-        best_fields = list(dict.fromkeys(best_fields))
-        field_pool = []
-        for field in free_fields:
-            if field in best_fields:
-                field_pool.append(field)
-        if not field_pool:
-            return free_fields
-        return field_pool
+        # Returns the free fields now; WIP
+        # TODO: Calculate with least as possible steps, calculate with opponent fields, go for possible wins
+        # TODO: is free fields required at all?! (calc w/ -1s instead, should mark opponent's...)
+        # TODO: best_fields = []
+        # TODO: # Go through all rows
+        # TODO: row_weights = {} # Highest should be selected
+        # TODO: for row, fields in self.table.items():
+        # TODO:     row_sum = 0
+        # TODO:     for field in fields:
+        # TODO:         row_sum += field
+        # TODO:     row_weights[row] = [row_sum]
+        # TODO: # Go through all columns
+        # TODO: col_weights = {} # Highest should be selected
+        # TODO: for row, fields in self.table.items():
+        # TODO:     for i in range(3):
+        # TODO:         col_weights[i] += fields[i] # FIXME ADDING
+
+        # TODO: print(row_weights)
+        # TODO: print(col_weights)
+
+        return free_fields
+
+    def check_state(self) -> bool:
+        """Checks the user's table for winning situations.
+
+        Returns:
+            bool: Returns 'True' when a winning situation occurs.
+        """
+        a = self.table['a']
+        b = self.table['b']
+        c = self.table['c']
+        win = False
+
+        # Check for complete rows
+        if sum(a) == 3 or sum(b) == 3 or sum(c) == 3:
+            win = True
+        
+        # Check for complete columns
+        for i in range(3):
+            if (a[i] and b[i] and c[i]) == 1:
+                win = True
+
+        # Check for complete diagonals
+        if b[1] == 1:
+            if (a[0] == 1 and c[2] == 1) or (a[2] and c[0] == 1):
+                win = True
+
+        return win
+
