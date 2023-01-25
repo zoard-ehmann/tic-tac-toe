@@ -109,7 +109,7 @@ if __name__ == '__main__':
                 computer_loop = False
             print('')
 
-        if curr_player.check_state():
+        if curr_player.check_win():
             print(f'{curr_player.name} have won!')
             curr_player.increment_score()
             game_is_on = False

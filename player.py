@@ -116,7 +116,7 @@ class Player:
 
         return free_fields
 
-    def check_state(self) -> bool:
+    def check_win(self) -> bool:
         """Checks the user's table for winning situations.
 
         Returns:
