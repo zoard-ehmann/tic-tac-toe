@@ -143,3 +143,14 @@ class Player:
 
         return win
 
+    def has_field_to_take(self) -> bool:
+        """Checks if there is free field on the board to take.
+
+        Returns:
+            bool: 'True' if there's at least 1 available field, 'False' otherwise.
+        """
+        for _, fields in self.table.items():
+            if 0 in fields:
+                return True
+        return
+

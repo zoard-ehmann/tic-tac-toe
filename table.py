@@ -35,17 +35,6 @@ class Table:
         """
         self.table_data[row][col] = symbol
 
-    def has_available_field(self) -> bool:
-        """Checks if there are any available fields on the board.
-
-        Returns:
-            bool: 'True' if there's at least 1 available field, 'False' otherwise.
-        """
-        for _, fields in self.table_data.items():
-            if " " in fields:
-                return True
-        return
-
     def print_table(self):
         """Prints the actual board.
         """

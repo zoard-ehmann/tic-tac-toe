@@ -113,7 +113,7 @@ if __name__ == '__main__':
             print(f'{curr_player.name} have won!')
             curr_player.increment_score()
             game_is_on = False
-        elif not table.has_available_field():
+        elif not curr_player.has_field_to_take():
             print('All the fields have been taken. It\'s a draw.')
             game_is_on = False
         else:
