@@ -138,7 +138,7 @@ class Player:
 
         # Check for complete diagonals
         if b[1] == 1:
-            if (a[0] == 1 and c[2] == 1) or (a[2] and c[0] == 1):
+            if (a[0] == 1 and c[2] == 1) or (a[2] == 1 and c[0] == 1):
                 win = True
 
         return win
