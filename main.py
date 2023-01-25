@@ -36,9 +36,9 @@ def mark_field(row:str, col:int) -> bool:
     """
     # TODO: check available fields on player level
     if curr_player.set_field(row=row, col=col, val=1):
-        second_player.set_field(row=row, col=col, val=-1)
-        table.set_table_field(row=row, col=col, symbol=curr_player.symbol)
-        return True
+        if second_player.set_field(row=row, col=col, val=-1):
+            table.set_table_field(row=row, col=col, symbol=curr_player.symbol)
+            return True
     return
 
 
