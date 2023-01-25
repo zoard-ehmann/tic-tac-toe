@@ -133,7 +133,7 @@ class Player:
         
         # Check for complete columns
         for i in range(3):
-            if (a[i] and b[i] and c[i]) == 1:
+            if a[i] == 1 and b[i] == 1 and c[i] == 1:
                 win = True
 
         # Check for complete diagonals
