@@ -11,8 +11,8 @@ class Player:
             player_nr (int): Number of the player. Possible values: 0 (for computer), 1 or 2.
         """
         self.number = player_nr
-        self.symbol = self._set_symbol()
-        self.name = self._set_name()
+        self.symbol = self.__set_symbol()
+        self.name = self.__set_name()
         self.score = 0
         self.table = {
             'a': [0, 0, 0],
@@ -20,7 +20,7 @@ class Player:
             'c': [0, 0, 0],
         }
 
-    def _set_symbol(self) -> str:
+    def __set_symbol(self) -> str:
         """Sets the symbol based on the player number.
 
         Returns:
@@ -30,7 +30,7 @@ class Player:
             return 'X'
         return 'O'
 
-    def _set_name(self) -> str:
+    def __set_name(self) -> str:
         """Prompts for a name and passes it for sanitizing.
 
         Returns:
@@ -40,10 +40,10 @@ class Player:
         while not name:
             name = 'Computer'
             if not self.number == 0:
-                name = self._sanitize_name(input(f'Please enter the name of Player {self.number} ({self.symbol}): '))
+                name = self.__sanitize_name(input(f'Please enter the name of Player {self.number} ({self.symbol}): '))
         return name
         
-    def _sanitize_name(self, name:str) -> str:
+    def __sanitize_name(self, name:str) -> str:
         """Sanitizes the user input to have a correct name format (capitalized, trimmed).
 
         Args:
