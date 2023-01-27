@@ -18,9 +18,8 @@ def generate_field() -> tuple:
     Returns:
         tuple: Row (alphabetical) and column (numeric) as a tuple.
     """
-    # TODO: Implement computer 'logic'
+    # TODO: Implement computer 'logic'; Move this to main flow (logic in player class), function is unnecessary
     best_fields = curr_player.get_best_fields() # Returns the free fields for now; WIP
-    print(best_fields)
     return random.choice(best_fields)
 
 
@@ -72,10 +71,11 @@ if __name__ == '__main__':
     if input('Single player mode? (enter \'y\' if yes): ').lower() == 'y':
         single_player = True
 
-    p1 = Player(player_nr=1)
     if single_player:
-        p2 = Player(player_nr=0)
+        p1 = Player(player_nr=1, is_computer=True)
+        p2 = Player(player_nr=2)
     else:
+        p1 = Player(player_nr=1)
         p2 = Player(player_nr=2)
 
     while p1.name == p2.name:
@@ -89,7 +89,7 @@ if __name__ == '__main__':
     game_is_on = True
     while game_is_on:
         print(f'\n{curr_player.name}\'s turn ({curr_player.symbol})\n')
-        if curr_player.number != 0:
+        if not curr_player.is_computer:
             player_loop = True
             while player_loop:
                 field = None
@@ -97,16 +97,16 @@ if __name__ == '__main__':
                     field = ask_field_input()
                 if mark_field(row=field[0], col=field[1]):
                     player_loop = False
-        else: # FIXME: should find a smarter solution to check for comp. loop and field generating
+        else:
             computer_loop = True
             while computer_loop:
                 field = generate_field()
-                mark_field(row=field[0], col=field[1])
                 for dot in range(3):
                     time.sleep(.5)
                     print('.', end='', flush=True)
                     dot += 1
-                computer_loop = False
+                if mark_field(row=field[0], col=field[1]):
+                    computer_loop = False
             print('')
 
         if curr_player.check_win():

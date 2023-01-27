@@ -4,13 +4,16 @@ VALID_COLUMNS = [0, 1, 2]
 class Player:
     """Main player class to set up a new player.
     """
-    def __init__(self, player_nr:int) -> None:
+    def __init__(self, player_nr:int, is_computer:bool=False) -> None:
         """Initialization function for new players, sets the symbol, table, score and prompts for a name.
 
         Args:
-            player_nr (int): Number of the player. Possible values: 0 (for computer), 1 or 2.
+            player_nr (int): Number of the player. Can be 1 (for 'X') or 2 (for 'O').
+            is_computer (bool, optional): Marker for computer opponent, 'True' for computer in single player mode.
+            Defaults to False.
         """
-        self.number = player_nr
+        self.number = player_nr # TODO: validate player nr.
+        self.is_computer = is_computer
         self.symbol = self.__set_symbol()
         self.name = self.__set_name()
         self.score = 0
@@ -24,14 +27,15 @@ class Player:
         """Sets the symbol based on the player number.
 
         Returns:
-            str: 'X' for player 1 and 'O' for player 2 / computer.
+            str: 'X' for player 1 and 'O' for player 2.
         """
         if self.number == 1:
             return 'X'
         return 'O'
 
     def __set_name(self) -> str:
-        """Prompts for a name and passes it for sanitizing.
+        """Prompts for a name and passes it for sanitizing. Sets it to 'Computer' for the opponent in
+        single player mode.
 
         Returns:
             str: Sanitized version of the name.
@@ -39,7 +43,7 @@ class Player:
         name = None
         while not name:
             name = 'Computer'
-            if not self.number == 0:
+            if not self.is_computer:
                 name = self.__sanitize_name(input(f'Please enter the name of Player {self.number} ({self.symbol}): '))
         return name
         
@@ -53,7 +57,11 @@ class Player:
             str: Sanitized version of the name. Returns 'None' if empty string is provided as input.
         """
         if len(name) != 0:
-            return name.strip().capitalize()
+            sanitized_name = name.strip().capitalize()
+            if sanitized_name == 'Computer':
+                print('\'Computer\' is reserved, please choose another one.')
+                return
+            return sanitized_name
         print('Name cannot be empty. Please try again.')
         return
 
