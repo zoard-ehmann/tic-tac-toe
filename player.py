@@ -65,6 +65,41 @@ class Player:
         print('Name cannot be empty. Please try again.')
         return
 
+    def __least_to_take(self, fields:list, direction:str) -> list:
+        """Calculates the fields that has the smallest frequency (higher chance of complete rows / columns)
+        and returns the corresponding fields as a list.
+
+        Args:
+            fields (list): Fields to calculate from.
+            direction (str): Can be 'row' or 'col'. Defines the calculation method.
+
+        Returns:
+            list: Fields that have the smallest frequency in a given direction.
+        """
+        frequency = {}
+        res = []
+        if direction == 'row':
+            field_selector = 0
+        elif direction == 'col':
+            field_selector = 1
+        for field in fields:
+            if field[field_selector] not in frequency:
+                frequency[field[field_selector]] = 0
+            frequency[field[field_selector]] += 1
+        target = [identifier for identifier, slots in frequency.items() if slots == min(frequency.values())]
+        for field in fields:
+            if field[field_selector] in target:
+                res.append(field)
+        return res
+
+    def __calc_min(self, *lists) -> list:
+        """Returns the shortest (in length) list from the lists.
+
+        Returns:
+            list: The shortest list from the lists.
+        """
+        return min(*lists, key=len)
+
     def set_field(self, row:str, col:int, val:int) -> bool:
         """Validates the input against the available fields. Sets the corresponding field for the user's
         table at a given location.
@@ -139,27 +174,13 @@ class Player:
                 return True
         return
 
-    def __least_to_take(self, fields:list, direction:str) -> list:
-        frequency = {}
-        res = []
-        if direction == 'row':
-            field_selector = 0
-        elif direction == 'col':
-            field_selector = 1
-        for field in fields:
-            if field[field_selector] not in frequency:
-                frequency[field[field_selector]] = 0
-            frequency[field[field_selector]] += 1
-        target = [identifier for identifier, slots in frequency.items() if slots == min(frequency.values())]
-        for field in fields:
-            if field[field_selector] in target:
-                res.append(field)
-        return res
-
-    def __calc_min(self, *lists):
-        return min(*lists, key=len)
-
     def get_recommended_fields(self) -> list:
+        """Calculates the fields that are the most recommended in order to win the game. Aims only for
+        win with own fields, does not take the opponent's fields into account. (#TODO)
+
+        Returns:
+            list: Most recommended fields.
+        """
         # Free fields
         free_fields = []
         for row, fields in self.table.items():
