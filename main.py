@@ -130,6 +130,7 @@ if __name__ == '__main__':
             if input('Would you like to play again? (enter \'y\' if yes): ').lower() == 'y':
                 game_is_on = True
                 curr_player = p1
+                second_player = p2
                 clear_console()
                 table.clear_table()
                 p1.clear_table()
