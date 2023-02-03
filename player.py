@@ -139,8 +139,28 @@ class Player:
                 return True
         return
 
-    def get_best_fields(self) -> list:
-        # Returns the free fields now; WIP
+    def __least_to_take(self, fields:list, direction:str) -> list:
+        frequency = {}
+        res = []
+        if direction == 'row':
+            field_selector = 0
+        elif direction == 'col':
+            field_selector = 1
+        for field in fields:
+            if field[field_selector] not in frequency:
+                frequency[field[field_selector]] = 0
+            frequency[field[field_selector]] += 1
+        target = [identifier for identifier, slots in frequency.items() if slots == min(frequency.values())]
+        for field in fields:
+            if field[field_selector] in target:
+                res.append(field)
+        return res
+
+    def __calc_min(self, *lists):
+        return min(*lists, key=len)
+
+    def get_recommended_fields(self) -> list:
+        # Free fields
         free_fields = []
         for row, fields in self.table.items():
             index = 0
@@ -148,25 +168,73 @@ class Player:
                 if field == 0:
                     free_fields.append((row, index))
                 index += 1
-            
-        # TODO: Calculate with least as possible steps, calculate with opponent fields, go for possible wins
-        # TODO: is free fields required at all?! (calc w/ -1s instead, should mark opponent's...)
-        # TODO: best_fields = []
-        # TODO: # Go through all rows
-        # TODO: row_weights = {} # Highest should be selected
-        # TODO: for row, fields in self.table.items():
-        # TODO:     row_sum = 0
-        # TODO:     for field in fields:
-        # TODO:         row_sum += field
-        # TODO:     row_weights[row] = [row_sum]
-        # TODO: # Go through all columns
-        # TODO: col_weights = {} # Highest should be selected
-        # TODO: for row, fields in self.table.items():
-        # TODO:     for i in range(3):
-        # TODO:         col_weights[i] += fields[i] # FIXME ADDING
 
-        # TODO: print(row_weights)
-        # TODO: print(col_weights)
+        # Rows
+        recommended_rows = []
+        for row, fields in self.table.items():
+            if not -1 in fields:
+                index = 0
+                for field in fields:
+                    if field == 0:
+                        recommended_rows.append((row, index))
+                    index += 1
+        recommended_rows = self.__least_to_take(fields=recommended_rows, direction='row')
 
-        return free_fields
+        # Columns
+        recommended_columns = []
+        for index in range(3):
+            skip = False
+            for row in self.table:
+                if self.table[row][index] == -1:
+                    skip = True
+                    break
+            if not skip:
+                for row in self.table:
+                    if self.table[row][index] == 0:
+                        recommended_columns.append((row, index))
+        recommended_columns = self.__least_to_take(fields=recommended_columns, direction='col')
+
+        # Diagonals (Common)
+        rows = list(self.table.keys())
+        recommended_diagonals_1 = []
+        recommended_diagonals_2 = []
+
+        # Diagonals (1)
+        skip_1 = False
+        for index in range(3):
+            if self.table[rows[index]][index] == -1:
+                skip_1 = True
+                break
+        if not skip_1:
+            for index in range(3):
+                if self.table[rows[index]][index] == 0:
+                    recommended_diagonals_1.append((rows[index], index))
+
+        # Diagonals (2)
+        skip_2 = False
+        for index in range(3):
+            if self.table[rows[(len(rows) -1) - index]][index] == -1:
+                skip_2 = True
+                break
+        if not skip_2:
+            for index in range(3):
+                if self.table[rows[(len(rows) -1) - index]][index] == 0:
+                    recommended_diagonals_2.append((rows[(len(rows) -1) - index], index))
+
+        min_query = []
+        if recommended_columns:
+            min_query.append(recommended_columns)
+        if recommended_rows:
+            min_query.append(recommended_rows)
+        if recommended_diagonals_1:
+            min_query.append(recommended_diagonals_1)
+        if recommended_diagonals_2:
+            min_query.append(recommended_diagonals_2)
+
+        best_fields = free_fields
+        lists = [l for l in min_query]
+        if lists:
+            best_fields = self.__calc_min(lists)
+
+        return best_fields
 

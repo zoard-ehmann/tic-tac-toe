@@ -18,8 +18,7 @@ def generate_field() -> tuple:
     Returns:
         tuple: Row (alphabetical) and column (numeric) as a tuple.
     """
-    # TODO: Implement computer 'logic'; Move this to main flow (logic in player class), function is unnecessary
-    best_fields = curr_player.get_best_fields() # Returns the free fields for now; WIP
+    best_fields = curr_player.get_recommended_fields()
     return random.choice(best_fields)
 
 
@@ -33,7 +32,6 @@ def mark_field(row:str, col:int) -> bool:
     Returns:
         bool: Returns 'True' if the marking of the desired field is successful.
     """
-    # TODO: check available fields on player level
     if curr_player.set_field(row=row, col=col, val=1):
         if second_player.set_field(row=row, col=col, val=-1):
             table.set_table_field(row=row, col=col, symbol=curr_player.symbol)
